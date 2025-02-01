@@ -20,6 +20,8 @@ Implements the exclusive scan algorithm using various sequential and SIMD techni
 
 *   rust-2024
 
+*   gcc
+
 ##  Setup
 
 *   Native build:
