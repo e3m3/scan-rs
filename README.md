@@ -10,6 +10,12 @@ Author/Maintainer:  Giordano Salvador <73959795+e3m3@users.noreply.github.com>
 
 #  Description
 
+[![Fedora 41](https://github.com/e3m3/scan-rs/actions/workflows/fedora-41.yaml/badge.svg?event=workflow_dispatch)](https://github.com/e3m3/scan-rs/actions/workflows/fedora-41.yaml)
+
+[![MacOS 14](https://github.com/e3m3/scan-rs/actions/workflows/macos-14.yaml/badge.svg?event=workflow_dispatch)](https://github.com/e3m3/scan-rs/actions/workflows/macos-14.yaml)
+
+Implements the exclusive scan algorithm using various sequential and SIMD techniques.
+
 ##  Prerequisites
 
 *   rust-2024

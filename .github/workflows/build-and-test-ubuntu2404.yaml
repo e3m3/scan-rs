@@ -1,0 +1,45 @@
+# Copyright 2025, Giordano Salvador
+# SPDX-License-Identifier: BSD-3-Clause
+
+name: Build-and-test
+
+on:
+
+  workflow_call:
+    inputs:
+      build_mode:
+        description: Build optimization level 
+        required: true
+        type: string
+      distro:
+        description: OS distribution name
+        required: true
+        type: string
+      os_ver:
+        description: OS distribution version
+        required: true
+        type: string
+      os:
+        description: OS string identifier
+        required: true
+        type: string
+
+jobs:
+
+  build-and-test:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}
+    steps:
+
+    - name: Checkout source  
+      uses: actions/checkout@v4
+
+    - name: Build source container
+      run: |
+        docker build \
+          -f containers/Containerfile.${{ inputs.distro }}${{ inputs.os_ver }} \
+          -t ${{ inputs.os }}-scan-rs-${{ inputs.build_mode }} \
+          ${{ inputs.build_mode == 'release' && '--build-arg=BUILD_MODE=--release' || '' }} \
+          .
