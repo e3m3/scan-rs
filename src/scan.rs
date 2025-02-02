@@ -55,10 +55,6 @@ impl ImplKind {
             ImplKind::Sequential => Scan::seq::<T>,
             ImplKind::SequentialNaive => Scan::seq_naive::<T>,
             ImplKind::SequentialNaiveDoubleBuffer => Scan::seq_naive_dbl::<T>,
-            ImplKind::ParallelCPUNaive => Scan::unimplemented::<T>,
-            ImplKind::ParallelCPUNaiveDoubleBuffer => Scan::unimplemented::<T>,
-            ImplKind::ParallelGPUNaive => Scan::unimplemented::<T>,
-            ImplKind::ParallelGPUNaiveDoubleBuffer => Scan::unimplemented::<T>,
             _ => Scan::unimplemented::<T>,
         };
         impl_fn(&scan_obj, identity, v_in, v_out)
