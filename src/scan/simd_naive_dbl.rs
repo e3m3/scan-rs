@@ -48,8 +48,8 @@ impl Scan {
             eprintln!("tmp_a: {:?}", &buf_a_slice[..]);
             eprintln!("tmp_b: {:?}", &buf_b_slice[..]);
         }
-        let n_chunks = n_out / N;
-        let d_end = n_out.ilog2();
+        let n_chunks = usize::div_ceil(n_out, N);
+        let d_end = (n_out as f32).log2().ceil() as usize;
         let simd_def = Simd::<T, N>::from_array([def; N]);
         for d in 0..d_end {
             if self.verbose {

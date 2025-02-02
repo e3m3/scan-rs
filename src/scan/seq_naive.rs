@@ -14,7 +14,7 @@ impl Scan {
     {
         let n_in = v_in.len();
         let n_out = v_out.len();
-        let d_end = n_out.ilog2();
+        let d_end = (n_out as f32).log2().ceil() as usize;
         Self::check_args(n_in, n_out)?;
         support::copy(&v_in[..(n_in - 1)], &mut v_out[1..n_out])?;
         v_out[0] = def;
