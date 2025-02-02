@@ -76,17 +76,14 @@ impl Scan {
                 let mask_en_j = Mask::<T::Mask, N>::from_array(simd_j.simd_lt(simd_n).to_array());
                 let mask_en_kj =
                     Mask::<T::Mask, N>::from_array(mask_en_k.bitand(mask_en_j).to_array());
-                let simd_ld_k_false =
-                    Simd::<T, N>::load_select(&buf_a[kk..kk_end_clamp], mask_dis_k, simd_def);
-                let simd_ld_k_true =
-                    Simd::<T, N>::load_select(&buf_a[kk..kk_end_clamp], mask_en_kj, simd_def);
+                let simd_ld_k = Simd::<T, N>::load_or(&buf_a[kk..kk_end_clamp], simd_def);
                 let simd_ld_j_true = Simd::<T, N>::gather_select(
                     &buf_a[0..n_out],
                     mask_en_kj.cast::<isize>(),
                     simd_j.cast::<usize>(),
                     simd_def,
                 );
-                let simd_add_kj_true = simd_ld_k_true.add(simd_ld_j_true);
+                let simd_add_kj_true = simd_ld_k.add(simd_ld_j_true);
                 if self.verbose {
                     eprintln!("simd_n: {:?}", simd_n);
                     eprintln!("simd_offset: {:?}", simd_offset);
@@ -96,12 +93,11 @@ impl Scan {
                     eprintln!("mask_dis_k: {:?}", mask_dis_k);
                     eprintln!("mask_en_j: {:?}", mask_en_j);
                     eprintln!("mask_en_kj: {:?}", mask_en_kj);
-                    eprintln!("simd_ld_k_false: {:?}", simd_ld_k_false);
-                    eprintln!("simd_ld_k_true: {:?}", simd_ld_k_true);
+                    eprintln!("simd_ld_k: {:?}", simd_ld_k);
                     eprintln!("simd_ld_j_true: {:?}", simd_ld_j_true);
                     eprintln!("simd_add_kj_true: {:?}", simd_add_kj_true);
                 }
-                simd_ld_k_false.store_select(&mut buf_b[kk..kk_end_clamp], mask_dis_k);
+                simd_ld_k.store_select(&mut buf_b[kk..kk_end_clamp], mask_dis_k);
                 simd_add_kj_true.store_select(&mut buf_b[kk..kk_end_clamp], mask_en_kj);
                 kk += N;
                 kk_end += N;
