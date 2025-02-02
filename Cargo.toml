@@ -1,6 +1,6 @@
 [package]
 name = "scan-rs"
-version = "0.2.1"
+version = "0.2.2"
 edition = "2024"
 authors = ["Giordano Salvador <73959795+e3m3@users.noreply.github.com>"]
 description = "Exclusive scan algorithms"
