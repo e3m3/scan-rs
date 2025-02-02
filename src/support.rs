@@ -365,7 +365,7 @@ where
 {
     let n = cmp::min(v.len(), N);
     let mut mask_array = [false; N];
-    mask_array[0..N].copy_from_slice(&v[0..n]);
+    mask_array[0..n].copy_from_slice(&v[0..n]);
     Mask::<U, N>::from_array(mask_array)
 }
 
