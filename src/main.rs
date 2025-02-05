@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 #![allow(dead_code)]
+#![allow(static_mut_refs)]
+#![allow(unused_assignments)]
 #![allow(clippy::unused_unit)]
 #![feature(adt_const_params)]
 #![feature(integer_sign_cast)]
@@ -104,7 +106,9 @@ fn main() -> ! {
         exit(ExitCode::Error, Some(&m));
     };
 
-    let result = if impl_kind.is_simd() {
+    let result = if impl_kind.is_parallel() {
+        impl_kind.dispatch_parallel::<TInt, 4>(0, v_in, v_out, verbose)
+    } else if impl_kind.is_simd() {
         impl_kind.dispatch_simd::<TInt, 4>(0, v_in, v_out, verbose)
     } else {
         impl_kind.dispatch::<TInt>(0, v_in, v_out, verbose)

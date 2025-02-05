@@ -14,6 +14,8 @@ use crate::exit::exit;
 use crate::support::IAdd;
 use crate::support::IDisplay;
 
+mod par_cpu_naive_dbl;
+mod par_unimplemented;
 mod seq;
 mod seq_naive;
 mod seq_naive_dbl;
@@ -81,6 +83,24 @@ impl ImplKind {
         impl_fn(&scan_obj, identity, v_in, v_out)
     }
 
+    pub fn dispatch_parallel<T, const N: usize>(
+        &self,
+        identity: T,
+        v_in: &[T],
+        v_out: &mut [T],
+        verbose: bool,
+    ) -> Result<(), String>
+    where
+        T: Copy + Eq + IAdd + IDisplay + Send,
+    {
+        let scan_obj = Scan::new(verbose);
+        let impl_fn = match self {
+            ImplKind::ParallelCPUNaiveDoubleBuffer => Scan::par_cpu_naive_dbl::<T, N>,
+            _ => Scan::par_unimplemented::<T, N>,
+        };
+        impl_fn(&scan_obj, identity, v_in, v_out)
+    }
+
     pub fn get_options_string() -> String {
         format!(
             "Implementations:\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}",
@@ -92,6 +112,13 @@ impl ImplKind {
             ImplKind::ParallelCPUNaiveDoubleBuffer.to_option_string(),
             ImplKind::ParallelGPUNaive.to_option_string(),
             ImplKind::ParallelGPUNaiveDoubleBuffer.to_option_string(),
+        )
+    }
+
+    pub fn is_parallel(self) -> bool {
+        matches!(
+            self,
+            ImplKind::ParallelCPUNaive | ImplKind::ParallelCPUNaiveDoubleBuffer
         )
     }
 
