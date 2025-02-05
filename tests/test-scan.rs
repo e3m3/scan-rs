@@ -124,6 +124,26 @@ mod tests {
     ];
 
     #[test]
+    fn test_par_cpu_naive_2x_n8_1() {
+        test_body(5, "ScanParCPUNaive2x", &N8_1_IN, &N8_1_OUT);
+    }
+
+    #[test]
+    fn test_par_cpu_naive_2x_n15_1() {
+        test_body(5, "ScanParCPUNaive2x", &N15_1_IN, &N15_1_OUT);
+    }
+
+    #[test]
+    fn test_par_cpu_naive_2x_n16_1() {
+        test_body(5, "ScanParCPUNaive2x", &N16_1_IN, &N16_1_OUT);
+    }
+
+    #[test]
+    fn test_par_cpu_naive_2x_n100_1() {
+        test_body(5, "ScanParCPUNaive2x", &N100_1_IN, &N100_1_OUT);
+    }
+
+    #[test]
     fn test_seq_n8_1() {
         test_body(0, "ScanSeq", &N8_1_IN, &N8_1_OUT);
     }
