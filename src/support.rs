@@ -3,6 +3,7 @@
 
 use std::cmp;
 use std::fmt;
+use std::mem::align_of;
 use std::ops;
 use std::ops::Range;
 use std::simd::LaneCount;
@@ -40,6 +41,13 @@ pub enum DoubleBufferMode {
     B,
 }
 
+/// Returns an aligned slice
+pub fn align<'a, T, U>(n: usize, p: *mut T) -> &'a mut [T] {
+    let offset = p.align_offset(align_of::<U>());
+    let buf = unsafe { slice::from_raw_parts_mut(p.wrapping_add(offset), n) };
+    &mut buf[0..n]
+}
+
 /// Returns a vector of type `T` of size `n`.
 pub fn alloc<T>(n: usize, def: T) -> Vec<T>
 where
@@ -55,9 +63,7 @@ where
     T: Copy,
 {
     let mut v = alloc(2 * n, def);
-    let (_, buf_, _) =
-        unsafe { slice::from_raw_parts_mut(v.as_mut_ptr(), 2 * n).align_to_mut::<U>() };
-    let buf = unsafe { slice::from_raw_parts_mut(buf_.as_mut_ptr() as *mut T, n) };
+    let buf = align::<T, U>(n, v[..].as_mut_ptr().cast::<T>());
     (buf, v)
 }
 
@@ -458,3 +464,12 @@ macro_rules! ImplZeroInt {
     };
 }
 ImplZeroInt!(i8, i16, i32, i64, isize, u8, u16, u32, u64, usize);
+
+impl fmt::Display for DoubleBufferMode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", match self {
+            DoubleBufferMode::A => "ModeA",
+            DoubleBufferMode::B => "ModeB",
+        })
+    }
+}
