@@ -30,9 +30,7 @@ pub enum ImplKind {
     SequentialNaive,
     SequentialNaiveDoubleBuffer,
     SimdNaiveDoubleBuffer,
-    ParallelCPUNaive,
     ParallelCPUNaiveDoubleBuffer,
-    ParallelGPUNaive,
     ParallelGPUNaiveDoubleBuffer,
 }
 
@@ -103,14 +101,12 @@ impl ImplKind {
 
     pub fn get_options_string() -> String {
         format!(
-            "Implementations:\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}",
+            "Implementations:\n{}\n{}\n{}\n{}\n{}\n{}",
             ImplKind::Sequential.to_option_string(),
             ImplKind::SequentialNaive.to_option_string(),
             ImplKind::SequentialNaiveDoubleBuffer.to_option_string(),
             ImplKind::SimdNaiveDoubleBuffer.to_option_string(),
-            ImplKind::ParallelCPUNaive.to_option_string(),
             ImplKind::ParallelCPUNaiveDoubleBuffer.to_option_string(),
-            ImplKind::ParallelGPUNaive.to_option_string(),
             ImplKind::ParallelGPUNaiveDoubleBuffer.to_option_string(),
         )
     }
@@ -118,7 +114,7 @@ impl ImplKind {
     pub fn is_parallel(self) -> bool {
         matches!(
             self,
-            ImplKind::ParallelCPUNaive | ImplKind::ParallelCPUNaiveDoubleBuffer
+            ImplKind::ParallelCPUNaiveDoubleBuffer
         )
     }
 
@@ -156,9 +152,7 @@ impl fmt::Display for ImplKind {
             ImplKind::SequentialNaive => "ScanSeqNaive",
             ImplKind::SequentialNaiveDoubleBuffer => "ScanSeqNaive2x",
             ImplKind::SimdNaiveDoubleBuffer => "ScanSimdNaive2x",
-            ImplKind::ParallelCPUNaive => "ScanParCPUNaive",
             ImplKind::ParallelCPUNaiveDoubleBuffer => "ScanParCPUNaive2x",
-            ImplKind::ParallelGPUNaive => "ScanParGPUNaive",
             ImplKind::ParallelGPUNaiveDoubleBuffer => "ScanParGPUNaive2x",
         })
     }
@@ -171,10 +165,8 @@ impl From<i8> for ImplKind {
             1 => ImplKind::SequentialNaive,
             2 => ImplKind::SequentialNaiveDoubleBuffer,
             3 => ImplKind::SimdNaiveDoubleBuffer,
-            4 => ImplKind::ParallelCPUNaive,
-            5 => ImplKind::ParallelCPUNaiveDoubleBuffer,
-            6 => ImplKind::ParallelGPUNaive,
-            7 => ImplKind::ParallelGPUNaiveDoubleBuffer,
+            4 => ImplKind::ParallelCPUNaiveDoubleBuffer,
+            5 => ImplKind::ParallelGPUNaiveDoubleBuffer,
             _ => {
                 exit(
                     ExitCode::Error,
