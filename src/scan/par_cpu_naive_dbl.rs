@@ -52,7 +52,7 @@ macro_rules! thread_body {
         $Verbose:ident,
         $Id:ident,
         $NIn:ident,
-        $ChAckReceived:ident$(,)?
+        $ChAckReceived:ident,
         $ChAckCompleted:ident$(,)?
     ) => {
         if $Verbose {
