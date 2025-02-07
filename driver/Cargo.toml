@@ -1,0 +1,26 @@
+[package]
+name = "driver"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description.workspace = true
+repository.workspace = true
+readme.workspace = true
+license-file.workspace = true
+
+[[bin]]
+name = "scan"
+path = "src/main.rs"
+
+[dependencies]
+bytemuck.workspace = true
+support.workspace = true
+par_cpu_naive_dbl = { path = "../impls/par_cpu_naive_dbl" }
+par_gpu_naive_dbl = { path = "../impls/par_gpu_naive_dbl" }
+par_unimplemented = { path = "../impls/par_unimplemented" }
+seq = { path = "../impls/seq" }
+seq_naive = { path = "../impls/seq_naive" }
+seq_naive_dbl = { path = "../impls/seq_naive_dbl" }
+simd_naive_dbl = { path = "../impls/simd_naive_dbl" }
+simd_unimplemented = { path = "../impls/simd_unimplemented" }
+unimplemented = { path = "../impls/unimplemented" }

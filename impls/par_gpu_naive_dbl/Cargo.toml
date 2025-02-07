@@ -1,0 +1,21 @@
+[package]
+name = "par_gpu_naive_dbl"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description.workspace = true
+repository.workspace = true
+readme.workspace = true
+license-file.workspace = true
+
+[dependencies]
+env_logger = "0.11.6"
+pollster = "0.4"
+wgpu = { tag = "v24.0.1", git = "https://github.com/gfx-rs/wgpu.git" }
+bytemuck.workspace = true
+support.workspace = true
+
+[build-dependencies]
+
+[dev-dependencies]
+test-scan.workspace = true

@@ -1,0 +1,15 @@
+[package]
+name = "unimplemented"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description.workspace = true
+repository.workspace = true
+readme.workspace = true
+license-file.workspace = true
+
+[dependencies]
+support.workspace = true
+
+[dev-dependencies]
+test-scan.workspace = true

@@ -1,17 +1,30 @@
-[package]
-name = "scan-rs"
+[workspace.package]
 version = "0.2.4"
-edition = "2024"
+edition = "2021"
 authors = ["Giordano Salvador <73959795+e3m3@users.noreply.github.com>"]
 description = "Exclusive scan algorithms"
 repository = "https://github.com/e3m3/scan-rs"
 readme = "README.md"
 license-file = "LICENSE"
 
-[[bin]]
-name = "scan"
-path = "src/main.rs"
+[workspace]
+resolver = "2"
+members = [
+    "deps/support",
+    "driver",
+    "impls/par_cpu_naive_dbl",
+    "impls/par_gpu_naive_dbl",
+    "impls/par_unimplemented",
+    "impls/seq",
+    "impls/seq_naive",
+    "impls/seq_naive_dbl",
+    "impls/simd_naive_dbl",
+    "impls/simd_unimplemented",
+    "impls/unimplemented",
+    "test-scan",
+]
 
-[dependencies]
-
-[dev-dependencies]
+[workspace.dependencies]
+bytemuck = "1.21.0"
+support = { path = "deps/support" }
+test-scan = { path = "test-scan" }

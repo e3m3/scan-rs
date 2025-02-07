@@ -7,7 +7,7 @@ eval "$(${HOMEBREW_HOME}/bin/brew shellenv)"
 
 brew install rustup
 
-RUSTUP_CHANNEL=nightly-2025-01-26
+RUSTUP_CHANNEL=nightly-2025-01-30
 RUSTUP_HOME=/root/.rustup
 
 rustup toolchain install ${RUSTUP_CHANNEL}

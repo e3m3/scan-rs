@@ -17,7 +17,7 @@ RUN dnf upgrade -y
 RUN dnf install -y gcc rustup
 RUN dnf clean -y all
 
-ENV RUST_CHANNEL=nightly-2025-01-26
+ENV RUST_CHANNEL=nightly-2025-01-30
 ENV RUSTFLAGS=''
 
 RUN rustup-init -y
