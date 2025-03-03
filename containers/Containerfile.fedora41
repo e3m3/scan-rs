@@ -31,8 +31,10 @@ COPY Cargo.toml             ${PROJECT_DIR}/
 COPY rust-toolchain.toml    ${PROJECT_DIR}/
 COPY LICENSE                ${PROJECT_DIR}/
 COPY README.md              ${PROJECT_DIR}/
-COPY src                    ${PROJECT_DIR}/src/
-COPY tests                  ${PROJECT_DIR}/tests/
+COPY deps                   ${PROJECT_DIR}/deps/
+COPY driver                 ${PROJECT_DIR}/driver/
+COPY impls                  ${PROJECT_DIR}/impls/
+COPY test-scan              ${PROJECT_DIR}/test-scan/
 
 ARG BUILD_MODE=
 
