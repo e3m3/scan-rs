@@ -44,6 +44,7 @@ fn scan(
                 }
             }
         }
+        storageBarrier();
         if (idx == 0) {
             if (mode == 0) {
                 mode = 1;
