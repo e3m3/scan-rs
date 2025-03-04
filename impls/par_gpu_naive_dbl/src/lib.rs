@@ -96,7 +96,10 @@ impl Scan {
         let instance = Instance::new(&InstanceDescriptor::default());
         let adapter = block_on(instance.request_adapter(&RequestAdapterOptions::default()))
             .ok_or("Failed to request adapter".to_string())?;
-        eprintln!("Found adapter: {:#?}", adapter.get_info());
+
+        if self.verbose {
+            eprintln!("Found adapter: {:#?}", adapter.get_info());
+        }
 
         if !adapter
             .get_downlevel_capabilities()
